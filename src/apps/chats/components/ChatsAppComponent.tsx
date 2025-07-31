@@ -23,7 +23,7 @@ import {
   type ChatRoom,
 } from "@/types/chat";
 import { Button } from "@/components/ui/button";
-import { useRyoChat } from "../hooks/useRyoChat";
+import { useSanChat } from "../hooks/useSanChat";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getPrivateRoomDisplayName } from "@/utils/chat";
@@ -171,8 +171,8 @@ export function ChatsAppComponent({
     (remainingCount > 0 ? `, ${remainingCount}+` : "");
 
   // Use the @ryo chat hook
-  const { isRyoLoading, stopRyo, handleRyoMention, detectAndProcessMention } =
-    useRyoChat({
+  const { isSanLoading, stopSan, handleSanMention, detectAndProcessMention } =
+    useSanChat({
       currentRoomId,
       onScrollToBottom: () => setScrollToBottomTrigger((prev) => prev + 1),
       roomMessages: currentRoomMessages?.map((msg: AppChatMessage) => ({
@@ -235,7 +235,7 @@ export function ChatsAppComponent({
           sendRoomMessage(input);
 
           // Then send to AI (doesn't affect input clearing)
-          handleRyoMention(messageContent);
+          handleSanMention(messageContent);
 
           // Trigger scroll
           setScrollToBottomTrigger((prev) => prev + 1);
@@ -262,7 +262,7 @@ export function ChatsAppComponent({
       handleAiSubmit,
       input,
       handleInputChange,
-      handleRyoMention,
+      handleSanMention,
       detectAndProcessMention,
     ]
   );
@@ -289,8 +289,8 @@ export function ChatsAppComponent({
   // Combined stop function for both AI chat and @ryo mentions
   const handleStop = useCallback(() => {
     stop(); // Stop regular AI chat
-    stopRyo(); // Stop @ryo chat
-  }, [stop, stopRyo]);
+    stopSan(); // Stop @san chat
+  }, [stop, stopSan]);
 
   // Font size handlers using store action
   const handleIncreaseFontSize = useCallback(() => {
@@ -724,7 +724,7 @@ export function ChatsAppComponent({
                     messages={currentMessagesToDisplay}
                     isLoading={
                       (isLoading && !currentRoomId) ||
-                      (!!currentRoomId && isRyoLoading)
+                      (!!currentRoomId && isSanLoading)
                     }
                     error={!currentRoomId ? error : undefined}
                     onRetry={reload}
@@ -791,7 +791,7 @@ export function ChatsAppComponent({
                       return (
                         <ChatInput
                           input={input}
-                          isLoading={isLoading || isRyoLoading}
+                          isLoading={isLoading || isSanLoading}
                           isForeground={isForeground}
                           onInputChange={handleInputChange}
                           onSubmit={handleSubmit}

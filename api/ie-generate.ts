@@ -3,7 +3,7 @@ import { SupportedModel, DEFAULT_MODEL, getModelInstance } from "./utils/aiModel
 import { Redis } from "@upstash/redis";
 import { normalizeUrlForCacheKey } from "./utils/url";
 import {
-  RYO_PERSONA_INSTRUCTIONS,
+  SAN_PERSONA_INSTRUCTIONS,
   DELIVERABLE_REQUIREMENTS,
 } from "./utils/aiPrompts";
 import { SUPPORTED_AI_MODELS } from "../src/types/aiModels";
@@ -105,7 +105,7 @@ const getDynamicSystemPrompt = (
   const YEAR_NOT_SPECIFIED_INSTRUCTIONS = `Year not specified. Assume current year ${currentYear}.`;
 
   const PERSONA_INSTRUCTIONS_BLOCK = `ABOUT THE DESIGNER (RYO LU):
-${RYO_PERSONA_INSTRUCTIONS}`;
+${SAN_PERSONA_INSTRUCTIONS}`;
 
   // --- Determine Year Specific Instructions ---
 
