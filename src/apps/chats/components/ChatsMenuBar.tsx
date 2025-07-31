@@ -197,7 +197,7 @@ export function ChatsMenuBar({
               <DropdownMenuSeparator className="h-[2px] bg-black my-1" />
             )}
 
-            {/* Ryo Chat Option */}
+            {/* Singgih Chat Option */}
             <DropdownMenuItem
               onClick={() => onRoomSelect(null)}
               className={cn(
@@ -206,7 +206,7 @@ export function ChatsMenuBar({
               )}
             >
               <span className={cn(currentRoom !== null && "pl-4")}>
-                {currentRoom === null ? "✓ @ryo" : "@ryo"}
+                {currentRoom === null ? "✓ @singgih" : "@singgih"}
               </span>
             </DropdownMenuItem>
 

@@ -2515,7 +2515,7 @@ assistant
 
       case "ai":
       case "chat":
-      case "ryo": {
+      case "singgih": {
         // Enter AI chat mode
         setIsInAiMode(true);
 
@@ -2528,7 +2528,7 @@ assistant
             id: "system",
             role: "system",
             content:
-              "You are a coding assistant running in the terminal app on ryOS.",
+              "You are a coding assistant running in the terminal app on sanOS.",
           },
         ]);
 
@@ -2721,7 +2721,7 @@ assistant
           id: "system",
           role: "system",
           content:
-            "You are a coding assistant running in the terminal app on ryOS.",
+            "You are a coding assistant running in the terminal app on sanOS.",
         },
       ]);
 
@@ -2755,7 +2755,7 @@ assistant
           id: "system",
           role: "system",
           content:
-            "You are a coding assistant running in the terminal app on ryOS.",
+            "You are a coding assistant running in the terminal app on sanOS.",
         },
       ]);
 

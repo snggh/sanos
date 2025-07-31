@@ -560,8 +560,8 @@ export function MinesweeperAppComponent({
             appMetadata || {
               name: "Minesweeper",
               version: "1.0.0",
-              creator: { name: "Ryo Lu", url: "https://ryo.lu" },
-              github: "https://github.com/ryokun6/ryos",
+              creator: { name: "Singgih", url: "https://singgih.dev" },
+              github: "https://github.com/snggh/sanos",
               icon: "/icons/default/minesweeper.png",
             }
           }

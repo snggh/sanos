@@ -39,10 +39,10 @@ export const appMetadata = {
   name: "Control Panels",
   version: "1.0.0",
   creator: {
-    name: "Ryo Lu",
-    url: "https://ryo.lu",
+    name: "Singgih",
+    url: "https://singgih.dev",
   },
-  github: "https://github.com/ryokun6/ryos",
+  github: "https://github.com/snggh/sanos",
   icon: "/icons/control-panels/appearance-manager/app.png",
 };
 

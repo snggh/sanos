@@ -43,7 +43,7 @@ interface FinderStoreState {
 }
 
 const STORE_VERSION = 2;
-const STORE_NAME = "ryos:finder";
+const STORE_NAME = "sanos:finder";
 
 export const useFinderStore = create<FinderStoreState>()(
   persist(

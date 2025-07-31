@@ -170,7 +170,7 @@ export function ChatsAppComponent({
     displayNames.join(", ") +
     (remainingCount > 0 ? `, ${remainingCount}+` : "");
 
-  // Use the @ryo chat hook
+  // Use the @singgih chat hook
   const { isSanLoading, stopSan, handleSanMention, detectAndProcessMention } =
     useSanChat({
       currentRoomId,
@@ -221,7 +221,7 @@ export function ChatsAppComponent({
       if (currentRoomId && username) {
         const trimmedInput = input.trim();
 
-        // Detect if this is an @ryo mention
+        // Detect if this is an @singgih mention
         const { isMention, messageContent } =
           detectAndProcessMention(trimmedInput);
 
@@ -231,7 +231,7 @@ export function ChatsAppComponent({
             target: { value: "" },
           } as React.ChangeEvent<HTMLInputElement>);
 
-          // Send the user's message to the chat room first (showing @ryo)
+          // Send the user's message to the chat room first (showing @singgih)
           sendRoomMessage(input);
 
           // Then send to AI (doesn't affect input clearing)
@@ -286,7 +286,7 @@ export function ChatsAppComponent({
     setScrollToBottomTrigger((prev) => prev + 1);
   }, [handleNudge]);
 
-  // Combined stop function for both AI chat and @ryo mentions
+  // Combined stop function for both AI chat and @singgih mentions
   const handleStop = useCallback(() => {
     stop(); // Stop regular AI chat
     stopSan(); // Stop @san chat
@@ -499,7 +499,7 @@ export function ChatsAppComponent({
         ...msg,
         // Ensure createdAt is a Date object if it exists, otherwise undefined
         createdAt: msg.createdAt ? new Date(msg.createdAt) : undefined,
-        username: msg.role === "user" ? username || "You" : "Ryo",
+        username: msg.role === "user" ? username || "You" : "Singgih",
       }));
 
   return (
@@ -511,7 +511,7 @@ export function ChatsAppComponent({
             ? currentRoom.type === "private"
               ? getPrivateRoomDisplayName(currentRoom, username)
               : `#${currentRoom.name}`
-            : "@ryo"
+            : "@singgih"
         }
         onClose={onClose}
         isForeground={isForeground}
@@ -657,7 +657,7 @@ export function ChatsAppComponent({
                         ? currentRoom.type === "private"
                           ? getPrivateRoomDisplayName(currentRoom, username)
                           : `#${currentRoom.name}`
-                        : "@ryo"}
+                        : "@singgih"}
                     </h2>
                     <ChevronDown className="h-3 w-3 transform transition-transform duration-200 text-neutral-400" />
                   </Button>
@@ -671,7 +671,7 @@ export function ChatsAppComponent({
                     )}
                 </div>
                 <div className="flex items-center gap-2">
-                  {/* Create Account button shown only in @ryo view when no username is set */}
+                  {/* Create Account button shown only in @singgih view when no username is set */}
                   {!currentRoom && !username && (
                     <Button
                       variant="ghost"
@@ -679,12 +679,12 @@ export function ChatsAppComponent({
                       className="flex items-center gap-1 px-2 py-1 h-7"
                     >
                       <span className="font-geneva-12 text-[11px] text-orange-600 hover:text-orange-700">
-                        Login to ryOS
+                        Login to sanOS
                       </span>
                     </Button>
                   )}
 
-                  {/* Clear chat button shown only in @ryo (no current room) */}
+                  {/* Clear chat button shown only in @singgih (no current room) */}
                   {!currentRoom && (
                     <Button
                       variant="ghost"
@@ -720,7 +720,7 @@ export function ChatsAppComponent({
                   ref={messagesContainerRef}
                 >
                   <ChatMessages
-                    key={currentRoomId || "ryo"}
+                    key={currentRoomId || "singgih"}
                     messages={currentMessagesToDisplay}
                     isLoading={
                       (isLoading && !currentRoomId) ||
@@ -755,7 +755,7 @@ export function ChatsAppComponent({
                 >
                   {/* Show "Create Account" button in two cases:
                       1. In a chat room without username
-                      2. In @ryo chat when rate limit is hit for anonymous users */}
+                      2. In @singgih chat when rate limit is hit for anonymous users */}
                   {(currentRoomId && !username) ||
                   (!currentRoomId && needsUsername && !username) ? (
                     isMacTheme ? (

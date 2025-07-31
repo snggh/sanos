@@ -478,14 +478,14 @@ export function ControlPanelsAppComponent({
 
   const performReset = () => {
     // Preserve critical recovery keys while clearing everything else
-    const fileMetadataStore = localStorage.getItem("ryos:files");
+    const fileMetadataStore = localStorage.getItem("sanos:files");
     const usernameRecovery = localStorage.getItem("_usr_recovery_key_");
     const authTokenRecovery = localStorage.getItem("_auth_recovery_key_");
 
     clearAllAppStates();
 
     if (fileMetadataStore) {
-      localStorage.setItem("ryos:files", fileMetadataStore);
+      localStorage.setItem("sanos:files", fileMetadataStore);
     }
     if (usernameRecovery) {
       localStorage.setItem("_usr_recovery_key_", usernameRecovery);
@@ -654,7 +654,7 @@ export function ControlPanelsAppComponent({
         .split("T")
         .join("-")
         .slice(0, -5);
-      a.download = `ryOS-backup-${timestamp}.gz`;
+      a.download = `sanOS-backup-${timestamp}.gz`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -753,10 +753,10 @@ export function ControlPanelsAppComponent({
           console.log(
             "[Restore] Detected old backup format (no version or version < 2)"
           );
-        } else if (backup.localStorage && backup.localStorage["ryos:files"]) {
+        } else if (backup.localStorage && backup.localStorage["sanos:files"]) {
           // For newer backups, also check if files lack UUIDs
           try {
-            const filesDataStr = backup.localStorage["ryos:files"];
+            const filesDataStr = backup.localStorage["sanos:files"];
             const filesData = filesDataStr ? JSON.parse(filesDataStr) : {};
             if (filesData.state && filesData.state.items) {
               // Check if any files lack UUIDs
@@ -915,7 +915,7 @@ export function ControlPanelsAppComponent({
           /* Synchronize files store metadata with IndexedDB content after restore */
           try {
             const db = await ensureIndexedDBInitialized();
-            const persistedKey = "ryos:files";
+            const persistedKey = "sanos:files";
             let raw = localStorage.getItem(persistedKey);
 
             // Handle case where files store doesn't exist yet (very old backups)
@@ -1294,7 +1294,7 @@ export function ControlPanelsAppComponent({
 
               // Clear any migration flag to ensure migration doesn't run again
               localStorage.setItem(
-                "ryos:indexeddb-uuid-migration-v1",
+                "sanos:indexeddb-uuid-migration-v1",
                 "completed"
               );
               console.log("[Restore] UUID migration completed during restore");
@@ -1309,7 +1309,7 @@ export function ControlPanelsAppComponent({
 
             // Emergency fallback: ensure library state is set to prevent auto-init even on error
             try {
-              const persistedKey = "ryos:files";
+              const persistedKey = "sanos:files";
               const raw = localStorage.getItem(persistedKey);
               if (raw) {
                 const parsed = JSON.parse(raw);
@@ -1616,7 +1616,7 @@ export function ControlPanelsAppComponent({
                             @{username}
                           </span>
                           <span className="text-[11px] text-gray-600 font-geneva-12">
-                            Logged in to ryOS
+                            Logged in to sanOS
                           </span>
                         </div>
                         <div className="flex gap-2">
@@ -1672,7 +1672,7 @@ export function ControlPanelsAppComponent({
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col">
                           <span className="text-[13px] font-geneva-12 font-medium">
-                            ryOS Account
+                            sanOS Account
                           </span>
                           <span className="text-[11px] text-gray-600 font-geneva-12">
                             Login to send messages and more
@@ -1750,7 +1750,7 @@ export function ControlPanelsAppComponent({
                   </Button>
                   <p className="text-[11px] text-gray-600 font-geneva-12">
                     This will clear all files (except sample docs), images, and
-                    custom wallpapers. ryOS will restart after format.
+                    custom wallpapers. sanOS will restart after format.
                   </p>
                 </div>
 
@@ -1874,24 +1874,24 @@ export function ControlPanelsAppComponent({
                         <SelectTrigger className="w-[120px]">
                           <SelectValue placeholder="Select">
                             {ttsVoice === "YC3iw27qriLq7UUaqAyi"
-                              ? "Ryo v3"
+                              ? "Singgih v3"
                               : ttsVoice === "kAyjEabBEu68HYYYRAHR"
-                              ? "Ryo v2"
+                              ? "Singgih v2"
                               : ttsVoice === "G0mlS0y8ByHjGAOxBgvV"
-                              ? "Ryo"
+                              ? "Singgih"
                               : "Select"}
                           </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="__null__">Select</SelectItem>
                           <SelectItem value="YC3iw27qriLq7UUaqAyi">
-                            Ryo v3
+                            Singgih v3
                           </SelectItem>
                           <SelectItem value="kAyjEabBEu68HYYYRAHR">
-                            Ryo v2
+                            Singgih v2
                           </SelectItem>
                           <SelectItem value="G0mlS0y8ByHjGAOxBgvV">
-                            Ryo
+                            Singgih
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -1962,14 +1962,14 @@ export function ControlPanelsAppComponent({
           onOpenChange={setIsConfirmResetOpen}
           onConfirm={handleConfirmReset}
           title="Reset All Settings"
-          description="Are you sure you want to reset all settings? This will clear all saved settings and restore default states. ryOS will restart after reset."
+          description="Are you sure you want to reset all settings? This will clear all saved settings and restore default states. sanOS will restart after reset."
         />
         <ConfirmDialog
           isOpen={isConfirmFormatOpen}
           onOpenChange={setIsConfirmFormatOpen}
           onConfirm={handleConfirmFormat}
           title="Format File System"
-          description="Are you sure you want to format the file system? This will permanently delete all documents (except sample documents), images, and custom wallpapers. ryOS will restart after format."
+          description="Are you sure you want to format the file system? This will permanently delete all documents (except sample documents), images, and custom wallpapers. sanOS will restart after format."
         />
         {/* Sign Up Dialog (was SetUsernameDialog) */}
         <LoginDialog
