@@ -147,7 +147,7 @@ async function saveDefaultContents(
 const getEmptyFileSystemState = (): Record<string, FileSystemItem> => ({});
 
 const STORE_VERSION = 8; // Increment to trigger fresh sync for sizes and timestamps
-const STORE_NAME = "ryos:files";
+const STORE_NAME = "sanos:files";
 
 const initialFilesData: FilesStoreState = {
   items: getEmptyFileSystemState(),

@@ -109,7 +109,7 @@ export const ChatRoomSidebar: React.FC<ChatRoomSidebarProps> = ({
           )}
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          {/* Ryo (@ryo) Chat Selection */}
+          {/* Singgih (@singgih) Chat Selection */}
           <div
             className={cn(
               "p-2 py-1",
@@ -120,7 +120,7 @@ export const ChatRoomSidebar: React.FC<ChatRoomSidebarProps> = ({
               onRoomSelect(null);
             }}
           >
-            @ryo
+            @singgih
           </div>
           {/* Chat Rooms List */}
           {Array.isArray(rooms) &&

@@ -5,10 +5,10 @@ export const appMetadata = {
   name: "Photo Booth",
   version: "1.0.0",
   creator: {
-    name: "Ryo Lu",
-    url: "https://ryo.lu",
+    name: "Singgih",
+    url: "https://singgih.dev",
   },
-  github: "https://github.com/ryokun6/ryos",
+  github: "https://github.com/snggh/sanos",
   icon: "/icons/default/photo-booth.png",
 };
 

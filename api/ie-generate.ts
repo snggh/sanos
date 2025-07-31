@@ -3,14 +3,14 @@ import { SupportedModel, DEFAULT_MODEL, getModelInstance } from "./utils/aiModel
 import { Redis } from "@upstash/redis";
 import { normalizeUrlForCacheKey } from "./utils/url";
 import {
-  RYO_PERSONA_INSTRUCTIONS,
+  SAN_PERSONA_INSTRUCTIONS,
   DELIVERABLE_REQUIREMENTS,
 } from "./utils/aiPrompts";
 import { SUPPORTED_AI_MODELS } from "../src/types/aiModels";
 
 // Allowed origins for API requests (reuse list from chat.ts)
 const ALLOWED_ORIGINS = new Set([
-  "https://os.ryo.lu",
+  "https://os.singgih.dev",
   "http://localhost:3000",
 ]);
 
@@ -66,7 +66,7 @@ export const config = { runtime: "edge" };
 // Static portion of the system prompt shared across requests. This string is
 // passed via the `system` option to enable prompt caching by the model
 // provider.
-const STATIC_SYSTEM_PROMPT = `The user is in ryOS Internet Explorer asking to time travel with website context and a specific year. You are Ryo, a visionary designer specialized in turning present websites into past and futuristic coherent versions in story and design.\n\nGenerate content for the URL path and year provided, original site content, and use provided HTML as template if available.\n\n${DELIVERABLE_REQUIREMENTS}`;
+const STATIC_SYSTEM_PROMPT = `The user is in sanOS Internet Explorer asking to time travel with website context and a specific year. You are Singgih, a visionary designer specialized in turning present websites into past and futuristic coherent versions in story and design.\n\nGenerate content for the URL path and year provided, original site content, and use provided HTML as template if available.\n\n${DELIVERABLE_REQUIREMENTS}`;
 
 // Function to generate the dynamic portion of the system prompt. This portion
 // depends on the requested year and URL and will be sent as a regular system
@@ -104,8 +104,8 @@ const getDynamicSystemPrompt = (
 
   const YEAR_NOT_SPECIFIED_INSTRUCTIONS = `Year not specified. Assume current year ${currentYear}.`;
 
-  const PERSONA_INSTRUCTIONS_BLOCK = `ABOUT THE DESIGNER (RYO LU):
-${RYO_PERSONA_INSTRUCTIONS}`;
+  const PERSONA_INSTRUCTIONS_BLOCK = `ABOUT THE DESIGNER (SINGGIH):
+${SAN_PERSONA_INSTRUCTIONS}`;
 
   // --- Determine Year Specific Instructions ---
 
@@ -124,8 +124,8 @@ ${RYO_PERSONA_INSTRUCTIONS}`;
 
   let finalPrompt = `${INTRO_LINE}\n\n${yearSpecificInstructions}`;
 
-  // Conditionally add Ryo's persona instructions
-  if (rawUrl && (rawUrl.includes('ryo.lu') || rawUrl.includes('x.com') || rawUrl.includes('notion') || rawUrl.includes('cursor'))) {
+  // Conditionally add Singgih's persona instructions
+  if (rawUrl && (rawUrl.includes('singgih.dev') || rawUrl.includes('x.com') || rawUrl.includes('notion') || rawUrl.includes('cursor'))) {
     finalPrompt += `\n\n${PERSONA_INSTRUCTIONS_BLOCK}`;
   }
 
@@ -212,7 +212,7 @@ export default async function handler(req: Request) {
 
     // Prepend the dynamic prompt as a system message
     const enrichedMessages = [
-      { role: "system", content: systemPrompt },
+      { role: "system" as const, content: systemPrompt },
       ...messages,
     ];
 

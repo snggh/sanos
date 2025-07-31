@@ -995,7 +995,7 @@ export async function GET(request) {
         // This is an admin-only endpoint for cleaning up expired presence
         const { username, token } = extractAuth(request);
         const isValid = await validateAuth(username, token, requestId);
-        if (!isValid.valid || username?.toLowerCase() !== "ryo") {
+        if (!isValid.valid || username?.toLowerCase() !== "singgih") {
           return createErrorResponse(
             "Unauthorized - Admin access required",
             403
@@ -1015,7 +1015,7 @@ export async function GET(request) {
         // Debug endpoint to check presence state
         const { username, token } = extractAuth(request);
         const isValid = await validateAuth(username, token, requestId);
-        if (!isValid.valid || username?.toLowerCase() !== "ryo") {
+        if (!isValid.valid || username?.toLowerCase() !== "singgih") {
           return createErrorResponse(
             "Unauthorized - Admin access required",
             403
@@ -1164,12 +1164,12 @@ export async function POST(request) {
         body.username &&
         body.username.toLowerCase() !== username?.toLowerCase()
       ) {
-        const allowedRyoProxy =
+        const allowedSinggihProxy =
           action === "sendMessage" &&
-          body.username.toLowerCase() === "ryo" &&
-          username; // any authenticated user may proxy as ryo
+          body.username.toLowerCase() === "singgih" &&
+          username; // any authenticated user may proxy as singgih
 
-        if (!allowedRyoProxy) {
+        if (!allowedSinggihProxy) {
           logInfo(
             requestId,
             `Auth mismatch: body username (${body.username}) != auth username (${username})`
@@ -1391,7 +1391,7 @@ async function handleCreateRoom(data, username, requestId) {
       return createErrorResponse("Room name is required for public rooms", 400);
     }
 
-    if (normalizedUsername !== "ryo") {
+    if (normalizedUsername !== "singgih") {
       logInfo(requestId, `Unauthorized: User ${username} is not the admin`);
       return createErrorResponse(
         "Forbidden - Only admin can create public rooms",
@@ -1523,7 +1523,7 @@ async function handleDeleteRoom(roomId, username, requestId) {
       }
     } else {
       // For public rooms, only admin can delete
-      if (username.toLowerCase() !== "ryo") {
+      if (username.toLowerCase() !== "singgih") {
         logInfo(requestId, `Unauthorized: User ${username} is not the admin`);
         return createErrorResponse(
           "Unauthorized - admin access required for public rooms",
@@ -2215,8 +2215,8 @@ async function handleLeaveRoom(data, requestId) {
 async function handleClearAllMessages(username, requestId) {
   logInfo(requestId, "Clearing all chat messages from all rooms");
 
-  // Check if the user is the admin ("ryo")
-  if (username?.toLowerCase() !== "ryo") {
+  // Check if the user is the admin ("singgih")
+  if (username?.toLowerCase() !== "singgih") {
     logInfo(requestId, `Unauthorized: User ${username} is not the admin`);
     return createErrorResponse("Forbidden - Admin access required", 403);
   }
@@ -2294,8 +2294,8 @@ async function handleClearAllMessages(username, requestId) {
 async function handleResetUserCounts(username, requestId) {
   logInfo(requestId, "Resetting all user counts and clearing room memberships");
 
-  // Check if the user is the admin ("ryo")
-  if (username?.toLowerCase() !== "ryo") {
+  // Check if the user is the admin ("singgih")
+  if (username?.toLowerCase() !== "singgih") {
     logInfo(requestId, `Unauthorized: User ${username} is not the admin`);
     return createErrorResponse("Forbidden - Admin access required", 403);
   }
@@ -2762,8 +2762,8 @@ async function handleDeleteMessage(roomId, messageId, username, requestId) {
     return createErrorResponse("Room ID and message ID are required", 400);
   }
 
-  // Only admin user (ryo) can delete via this endpoint - use authenticated username
-  if (username?.toLowerCase() !== "ryo") {
+  // Only admin user (singgih) can delete via this endpoint - use authenticated username
+  if (username?.toLowerCase() !== "singgih") {
     logInfo(
       requestId,
       `Unauthorized delete attempt by authenticated user: ${username}`

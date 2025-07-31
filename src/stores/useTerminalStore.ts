@@ -16,7 +16,7 @@ interface TerminalStoreState {
 }
 
 const STORE_VERSION = 1;
-const STORE_NAME = "ryos:terminal";
+const STORE_NAME = "sanos:terminal";
 
 export const useTerminalStore = create<TerminalStoreState>()(
   persist(

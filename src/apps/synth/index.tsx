@@ -38,10 +38,10 @@ export const appMetadata = {
   name: "Synth",
   version: "0.1",
   creator: {
-    name: "Ryo Lu",
-    url: "https://ryo.lu",
+    name: "Singgih",
+    url: "https://singgih.dev",
   },
-  github: "https://github.com/ryokun6/ryos",
+  github: "https://github.com/snggh/sanos",
   icon: "/icons/default/synth.png",
 };
 

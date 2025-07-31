@@ -6,7 +6,7 @@ import {
   getModelInstance,
 } from "./utils/aiModels";
 import {
-  RYO_PERSONA_INSTRUCTIONS,
+  SAN_PERSONA_INSTRUCTIONS,
   ANSWER_STYLE_INSTRUCTIONS,
   CODE_GENERATION_INSTRUCTIONS,
   CHAT_INSTRUCTIONS,
@@ -128,7 +128,7 @@ interface SystemState {
 }
 
 // Allowed origins for API requests
-const ALLOWED_ORIGINS = new Set(["https://os.ryo.lu", "http://localhost:3000"]);
+const ALLOWED_ORIGINS = new Set(["https://os.singgih.dev", "http://localhost:3000"]);
 
 // Function to validate request origin
 // Only allow explicit origins defined in ALLOWED_ORIGINS – no wildcard ports or IP fallbacks
@@ -149,7 +149,7 @@ export const config = {
 // Unified static prompt with all instructions
 const STATIC_SYSTEM_PROMPT = [
   ANSWER_STYLE_INSTRUCTIONS,
-  RYO_PERSONA_INSTRUCTIONS,
+  SAN_PERSONA_INSTRUCTIONS,
   CHAT_INSTRUCTIONS,
   TOOL_USAGE_INSTRUCTIONS,
   CODE_GENERATION_INSTRUCTIONS,
@@ -179,7 +179,7 @@ const generateDynamicSystemPrompt = (systemState?: SystemState) => {
     day: "numeric",
   });
 
-  const ryoTimeZone = "America/Los_Angeles";
+  const singgihTimeZone = "America/Los_Angeles";
 
   if (!systemState) return "";
 
@@ -188,7 +188,7 @@ const generateDynamicSystemPrompt = (systemState?: SystemState) => {
 Current User: ${systemState.username || "you"}
 
 ## TIME & LOCATION
-Ryo Time: ${timeString} on ${dateString} (${ryoTimeZone})`;
+Singgih Time: ${timeString} on ${dateString} (${singgihTimeZone})`;
 
   if (systemState.userLocalTime) {
     prompt += `
@@ -346,7 +346,7 @@ ${index + 1}. ${instance.title}${unsavedMark} (ID: ${instance.instanceId})`;
     prompt += `\n\n<chat_room_reply_instructions>
 ## CHAT ROOM CONTEXT
 Room ID: ${systemState.chatRoomContext.roomId}
-Your Role: Respond as 'ryo' in this IRC-style chat room
+Your Role: Respond as 'singgih' in this IRC-style chat room
 Response Style: Use extremely concise responses
 
 Recent Conversation:
@@ -550,7 +550,7 @@ export default async function handler(req: Request) {
     // ---------------------------
     // Rate-limit & auth checks
     // ---------------------------
-    // Validate authentication (all users, including "ryo", must present a valid token)
+    // Validate authentication (all users, including "singgih", must present a valid token)
     const validationResult = await validateAuthToken(username, authToken);
 
     // If a username was provided but the token is missing/invalid, reject the request early
@@ -701,7 +701,7 @@ export default async function handler(req: Request) {
       tools: {
         launchApp: {
           description:
-            "Launch an application in the ryOS interface when the user explicitly requests it. If the id is 'internet-explorer', you must provide BOTH a real 'url' and a 'year' for time-travel; otherwise provide neither.",
+            "Launch an application in the sanOS interface when the user explicitly requests it. If the id is 'internet-explorer', you must provide BOTH a real 'url' and a 'year' for time-travel; otherwise provide neither.",
           parameters: z
             .object({
               id: z.enum(appIds).describe("The app id to launch"),
@@ -774,14 +774,14 @@ export default async function handler(req: Request) {
         },
         closeApp: {
           description:
-            "Close an application in the ryOS interface—but only when the user explicitly asks you to close that specific app.",
+            "Close an application in the sanOS interface—but only when the user explicitly asks you to close that specific app.",
           parameters: z.object({
             id: z.enum(appIds).describe("The app id to close"),
           }),
         },
         switchTheme: {
           description:
-            "Switch the ryOS UI theme to a specific OS style when the user explicitly requests it.",
+            "Switch the sanOS UI theme to a specific OS style when the user explicitly requests it.",
           parameters: z.object({
             theme: z
               .enum(themeIds)
@@ -887,12 +887,12 @@ export default async function handler(req: Request) {
         },
         ipodAddAndPlaySong: {
           description:
-            "Adds a song to the iPod library from a YouTube video ID or URL and plays it. Supports YouTube URLs (youtube.com/watch?v=, youtu.be/), video IDs, and share URLs (os.ryo.lu/ipod/:id). The system will automatically fetch title, artist, and album information. The iPod app will be launched if it's not already open.",
+            "Adds a song to the iPod library from a YouTube video ID or URL and plays it. Supports YouTube URLs (youtube.com/watch?v=, youtu.be/), video IDs, and share URLs (os.singgih.dev/ipod/:id). The system will automatically fetch title, artist, and album information. The iPod app will be launched if it's not already open.",
           parameters: z.object({
             id: z
               .string()
               .describe(
-                "The YouTube video ID or any supported URL format (YouTube URL, os.ryo.lu/ipod/:id, etc.) of the song to add and play."
+                "The YouTube video ID or any supported URL format (YouTube URL, os.singgih.dev/ipod/:id, etc.) of the song to add and play."
               ),
           }),
         },

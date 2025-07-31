@@ -86,7 +86,7 @@ const getSystemState = () => {
   };
 };
 
-interface UseRyoChatProps {
+interface UseSanChatProps {
   currentRoomId: string | null;
   onScrollToBottom: () => void;
   roomMessages?: Array<{
@@ -97,11 +97,11 @@ interface UseRyoChatProps {
   }>;
 }
 
-export function useRyoChat({
+export function useSanChat({
   currentRoomId,
   onScrollToBottom,
   roomMessages = [],
-}: UseRyoChatProps) {
+}: UseSanChatProps) {
   // Pull current auth credentials from store (reactive)
   const { authToken, username } = useChatsStore();
 
@@ -112,12 +112,12 @@ export function useRyoChat({
     authHeaders["X-Username"] = username;
   }
 
-  // Create a separate AI chat hook for @ryo mentions in chat rooms
+  // Create a separate AI chat hook for @san mentions in chat rooms
   const {
-    messages: ryoMessages,
-    isLoading: isRyoLoading,
-    append: appendToRyo,
-    stop: stopRyo,
+    messages: sanMessages,
+    isLoading: isSanLoading,
+    append: appendToSan,
+    stop: stopSan,
   } = useChat({
     maxSteps: 5,
     body: {
@@ -128,7 +128,7 @@ export function useRyoChat({
       // When AI finishes responding, send the response to the chat room
       if (currentRoomId && message.role === "assistant") {
         // Send as a regular message to the room
-        // We'll need to call the API directly since we want it to appear from 'ryo'
+        // We'll need to call the API directly since we want it to appear from 'singgih'
         const headers: HeadersInit = { "Content-Type": "application/json" };
 
         if (authToken && username) {
@@ -141,7 +141,7 @@ export function useRyoChat({
           headers,
           body: JSON.stringify({
             roomId: currentRoomId,
-            username: "ryo",
+            username: "san",
             content: message.content,
           }),
         });
@@ -152,7 +152,7 @@ export function useRyoChat({
     },
   });
 
-  const handleRyoMention = useCallback(
+  const handleSanMention = useCallback(
     async (messageContent: string) => {
       // Get recent chat room messages as context (last 20 messages)
       const recentMessages = roomMessages
@@ -171,7 +171,7 @@ export function useRyoChat({
       };
 
       // Send the message content to AI with chat room context
-      await appendToRyo(
+      await appendToSan(
         {
           role: "user",
           content: messageContent,
@@ -181,17 +181,17 @@ export function useRyoChat({
         }
       );
     },
-    [appendToRyo, roomMessages, currentRoomId]
+    [appendToSan, roomMessages, currentRoomId]
   );
 
   const detectAndProcessMention = useCallback(
     (input: string): { isMention: boolean; messageContent: string } => {
-      if (input.startsWith("@ryo ")) {
-        // Extract the message content after @ryo
+      if (input.startsWith("@san ")) {
+        // Extract the message content after @san
         const messageContent = input.substring(4).trim();
         return { isMention: true, messageContent };
-      } else if (input === "@ryo") {
-        // If they just typed @ryo without a message, treat it as a nudge
+      } else if (input === "@san") {
+        // If they just typed @san without a message, treat it as a nudge
         return { isMention: true, messageContent: "👋 *nudge sent*" };
       }
       return { isMention: false, messageContent: "" };
@@ -200,10 +200,10 @@ export function useRyoChat({
   );
 
   return {
-    ryoMessages,
-    isRyoLoading,
-    stopRyo,
-    handleRyoMention,
+    sanMessages,
+    isSanLoading,
+    stopSan,
+    handleSanMention,
     detectAndProcessMention,
   };
 }

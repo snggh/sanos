@@ -659,7 +659,7 @@ export const useAppStore = create<AppStoreState>()(
       },
     }),
     {
-      name: "ryos:app-store",
+      name: "sanos:app-store",
       version: CURRENT_APP_STORE_VERSION,
       partialize: (state): Partial<AppStoreState> => ({
         windowOrder: state.windowOrder,
