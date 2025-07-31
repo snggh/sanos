@@ -104,7 +104,7 @@ const getDynamicSystemPrompt = (
 
   const YEAR_NOT_SPECIFIED_INSTRUCTIONS = `Year not specified. Assume current year ${currentYear}.`;
 
-  const PERSONA_INSTRUCTIONS_BLOCK = `ABOUT THE DESIGNER (RYO LU):
+  const PERSONA_INSTRUCTIONS_BLOCK = `ABOUT THE DESIGNER (SINGGIH):
 ${SAN_PERSONA_INSTRUCTIONS}`;
 
   // --- Determine Year Specific Instructions ---
@@ -212,7 +212,7 @@ export default async function handler(req: Request) {
 
     // Prepend the dynamic prompt as a system message
     const enrichedMessages = [
-      { role: "system", content: systemPrompt },
+      { role: "system" as const, content: systemPrompt },
       ...messages,
     ];
 
